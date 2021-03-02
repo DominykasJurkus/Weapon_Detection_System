@@ -1,0 +1,16 @@
+  
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static '/css/navbar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/css/util.css' %}">
+
+<nav class="navbar navbar-dark bg-dark justify-content-between">
+    <span class="navbar-brand" style="margin-left: 45px;">Weapon Detection System</span>
+
+    <ul class="form-inline my-2 my-lg-0">
+      <span class="hello-msg">Hello, {{request.user}}!</span>
+      <span ><a class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+    </ul>
+
+  
+  </nav>

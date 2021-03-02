@@ -1,0 +1,118 @@
+{%  extends 'detection/main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% load event_tags %}
+
+<div class="limiter">
+<div class="container-login100 p-b-0 p-t-0">
+	<div class="wrap-login100 p-l-30 p-r-30 p-t-20 p-b-20">
+		<div class="Search">
+			<form method="get">
+				<div class="row">
+
+					<div class="col">
+						<!-- Location Input -->
+						<input class="form-control" type="text"  placeholder="Location"
+						name="{{ myFilter.form.location.name }}"
+						id="{{ myFilter.form.location.id_for_label }}"
+						{% if myFilter.form.location.value != None %}value="{{ myFilter.form.location.value|stringformat:'s' }}"{% endif %}
+						maxlength="{{ myFilter.form.location.field.max_length }}"
+						{% if myFilter.form.location.field.required %}required{% endif %}>
+					</div>
+
+					<div class="col">
+						<!-- Alert was sent to Input -->
+						<input class="form-control" type="text"  placeholder="Alert was sent to"
+						name="{{ myFilter.form.alert_receiver.name }}"
+						id="{{ myFilter.form.alert_receiver.id_for_label }}"
+						{% if myFilter.form.alert_receiver.value != None %}value="{{ myFilter.form.alert_receiver.value|stringformat:'s' }}"{% endif %}
+						maxlength="{{ myFilter.form.alert_receiver.field.max_length }}"
+						{% if myFilter.form.alert_receiver.field.required %}required{% endif %}>
+					</div>
+
+					<div class="col-2">
+						<!-- Start Date Input -->
+						<input class="form-control" type="text" id="date" placeholder="Start Date" autocomplete="off"
+						name="{{ myFilter.form.start_date.name }}"
+						id="{{ myFilter.form.start_date.id_for_label }}"
+						{% if myFilter.form.start_date.value != None %}value="{{ myFilter.form.start_date.value|stringformat:'s' }}"{% endif %}
+						maxlength="{{ myFilter.form.start_date.field.max_length }}"
+						{% if myFilter.form.start_date.field.required %}required{% endif %}>
+					</div>
+
+					<div class="col-2">
+						<!-- End Date Input Input -->
+						<input class="form-control" type="text" id="date" placeholder="End Date" autocomplete="off"
+						name="{{ myFilter.form.end_date.name }}"
+						id="{{ myFilter.form.end_date.id_for_label }}"
+						{% if myFilter.form.end_date.value != None %}value="{{ myFilter.form.end_date.value|stringformat:'s' }}"{% endif %}
+						maxlength="{{ myFilter.form.end_date.field.max_length }}"
+						{% if myFilter.form.end_date.field.required %}required{% endif %}>
+					</div>
+
+					<div class="col-1">
+						<button class="btn btn-primary" type="submit">Search</button>
+					</div>
+				  </div>
+			</form>
+		</div>
+		
+</div>
+</div>
+</div>
+
+   <script>
+	jQuery(document).ready(function($){
+	  var date_input=$('input[id="date"]');
+	  var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+	  var options={
+		format: 'yyyy-mm-dd',
+		container: container,
+		todayHighlight: true,
+		autoclose: true,
+	  };
+	  date_input.datepicker(options);
+	});
+	</script>
+	
+<div class="limiter">
+<div class="container-login100 p-t-0">
+<div class="wrap-login100 p-l-40 p-r-40 p-t-25 p-b-15">
+		
+			<table class="table table-image">
+				<tr>
+					<th scope="col" class="top-row">Detection</th>
+					<th scope="col" class="top-row">Location</th>
+					<th scope="col" class="top-row">Alert was sent to</th>
+					<th scope="col" class="top-row">Time</th>
+					<th scope="col" class="top-row">Alert</th>
+				</tr>
+
+				{% for alert in uploadAlert %}
+
+				<tr>
+					<td class="w-25"><img style="max-width: 250px; max-height: 150x; border-radius: 2.5%;" 
+						class="img-fluid" src='https://uploaded-alerts.s3.eu-north-1.amazonaws.com/media/{{alert.image}}'/></td>
+					<td>{{alert.location}}</td>
+					<td>{{alert.alert_receiver}}</td>
+					<td>{{alert.date_created|date:"Y-m-d H:i:s"}}</td>
+					
+					{% with uuid=alert.image|split:"." %}
+
+					<td><a class="btn btn-sm btn-info" href="/alert/{{uuid.0}}">View</a></td>
+
+					{% endwith %}
+					
+				</tr>
+				{% endfor %}
+
+			</table>
+		
+</div>
+</div>
+</div>
+
+{% endblock %}

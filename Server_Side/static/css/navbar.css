@@ -1,0 +1,23 @@
+
+@font-face {
+    font-family: OpenSans-Regular;
+    src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
+    }  
+    
+    * {
+        margin: 0px; 
+        padding: 0px; 
+        box-sizing: border-box;
+    }
+    
+    body, html {
+        height: 100%;
+        font-family: OpenSans-Regular, sans-serif;
+    }
+
+
+.hello-msg{
+    font-size: 18px;
+    color: #fff;
+    margin-right: 60px;
+  }
